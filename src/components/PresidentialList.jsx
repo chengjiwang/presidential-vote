@@ -1,0 +1,96 @@
+import PropTypes from 'prop-types'
+import { Typography, Box, List, ListItem, ListItemText, ListItemAvatar } from '@mui/material'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+
+import { partyColor } from '../utils/partyColor.js'
+import theme from '../theme.js'
+
+export default function PresidentialList({ candidate, voteData }) {
+  let maxTotalPartyName = ''
+  Object.entries(voteData).forEach(([party, partyData]) => {
+    if (typeof partyData === 'object' && Object.hasOwnProperty.call(partyData, 'total')) {
+      if (!maxTotalPartyName || partyData.total > voteData[maxTotalPartyName].total) {
+        maxTotalPartyName = party;
+      }
+    }
+  })
+  
+  return (
+    <List
+      sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        width: '100%',
+        minWidth: 170
+      }}
+      disablePadding
+    >
+      {Object.keys(candidate).map((key, index) => {
+        return (
+          <ListItem
+            key={index}
+            disablePadding
+            alignItems="flex-start"
+            sx={{ width: { xs: '100%', md: `${(1 / 3) * 100}%` } }}
+          >
+            <ListItemAvatar sx={{ mr: 0.5 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 48,
+                  height: 48,
+                  fontSize: 28,
+                  fontWeight: 700,
+                  borderRadius: 4,
+                  color: 'white',
+                  bgcolor: partyColor[key]
+                }}
+              >
+                {candidate[key].number}
+              </Box>
+            </ListItemAvatar>
+
+            <ListItemText
+              primary={key}
+              sx={{ mb: 1.5 }}
+              primaryTypographyProps={{ fontSize: 12, color: 'text.secondary' }}
+              secondary={
+                <>
+                  <Box component='span' sx={{ display: 'flex', py: 0.5 }}>
+                    <Typography
+                      sx={{ fontSize: 16 }}
+                      component='span'
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {candidate[key].name}
+                    </Typography>
+
+                    {key === maxTotalPartyName && <CheckCircleIcon color='primary' />}
+                  </Box>
+
+                  <Box component='span'>
+                    <Box
+                      component='span'
+                      sx={{ fontSize: 16, fontWeight: 700, color: theme.palette.text.primary }}
+                    >
+                      {voteData[key].total.toLocaleString()}
+                    </Box>
+                    <Box component='span' sx={{ ml: 0.5 }}>票</Box>
+                  </Box>
+                </>
+              }
+            />
+          </ListItem>
+        )
+      })}
+    </List>
+  )
+}
+
+PresidentialList.propTypes = {
+  candidate: PropTypes.object,
+  voteData: PropTypes.object,
+};
