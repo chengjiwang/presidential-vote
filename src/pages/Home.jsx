@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Button, Box, Container, Typography, Grid } from '@mui/material'
+import { Button, Box, Container, Typography, Grid, Stack } from '@mui/material'
 import styled from '@emotion/styled';
 
+import { yearList } from '../utils/yearList.js'
 import LogoIcon from '../assets/logo.svg'
 import TitleIcon from '../assets/home_title.svg'
 import Candidate1Icon from '../assets/candidate1.svg'
@@ -13,82 +14,102 @@ import Candidate6Icon from '../assets/candidate6.svg'
 
 const ImgLogo = styled.img`
   width: 137px;
-  margin-bottom: 1.5rem;
 `;
 const ImgTitle = styled.img`
   width: 525px;
-  margin-bottom: 1.5rem;
   @media (max-width: 600px) {
     width: 287px;
   }
 `;
 
-const ImgCandidate = styled.img`
-  width: 100%;
-`;
-
-const years = ['2020', '2016']
+const candidateLogos = [
+  Candidate1Icon,
+  Candidate2Icon,
+  Candidate3Icon,
+  Candidate4Icon,
+  Candidate5Icon,
+  Candidate6Icon,
+]
 
 function HomePage() {
   return (
-    <>
-      <Container maxWidth="md" sx={{ textAlign: 'center' }}>
-        <Box sx={{ mt: 12 }}>
-          <div>
+    <Container>
+      <Stack
+        height='100vh'
+        justifyContent='space-between'
+      >
+        <Stack spacing={3} component='section' sx={{ mt: 12 }}>
+          <Stack spacing={2} alignItems='center'>
             <ImgLogo src={LogoIcon} alt="Logo" />
-          </div>
-          <div>
             <ImgTitle src={TitleIcon} alt="title" />
-          </div>
+          </Stack>
 
-          <Typography variant="h5" component="h2" align='center' color="primary" fontWeight="bold" sx={{ my: 3 }}>
+          <Typography
+            variant="h5"
+            component="h2"
+            align='center'
+            color="primary"
+            fontWeight="bold"
+          >
             選擇查詢年份
           </Typography>
 
-          {[...years].reverse().map(year => {
-            return (
-              <Link to={`/vote/${year}`} key={year}>
-                <Button variant="contained" color='bg' size="large" sx={{ width: 162, borderRadius: 16, fontWeight: 700, fontSize: 16, mr: 2, mb: 2, py: 1.5 }}>
-                  {year}
-                </Button>
-              </Link>
-            )
-          })}
-        </Box>
-      </Container>
+          <Box>
+            <Grid
+              container
+              pl={0}
+              spacing={2}
+              component='ul'
+            >
+              {yearList.map(year => (
+                <Grid
+                  item
+                  xs={6}
+                  md={3}
+                  xl={2.4}
+                  key={year}
+                  component='li'
+                  sx={{ listStyle: 'none' }}
+                >
+                  <Link to={`/vote/${year}`} key={year}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color='bg'
+                      size="large"
+                      sx={{
+                        borderRadius: 16,
+                        fontWeight: 700,
+                        fontSize: 16,
+                      }}
+                    >
+                      {year}
+                    </Button>
+                  </Link>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Stack>
 
-      <Container 
-        maxWidth="1920px" 
-        sx={{
-          position: 'fixed',
-          bottom: -25,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '100%',
-        }}
-      >
-        <Grid container spacing={0}>
-          <Grid item sm={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <ImgCandidate src={Candidate1Icon} />
+        <Stack direction='row' component='section'>
+          <Grid
+            container
+            spacing={0}
+            wrap='nowrap'
+            overflow='hidden'
+            mb={{ xs: '-3%', md: '-2%' }}
+          >
+            {candidateLogos.map((logo, index) => (
+              <Grid item xs={3} sm={2} key={index}>
+                <img src={logo} style={{ width: '100%' }} />
+              </Grid>
+            ))}
           </Grid>
-          <Grid item sm={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <ImgCandidate src={Candidate2Icon} />
-          </Grid>
-          <Grid item xs={3} sm={2}>
-            <ImgCandidate src={Candidate3Icon} />
-          </Grid>
-          <Grid item xs={3} sm={2}>
-            <ImgCandidate src={Candidate4Icon} />
-          </Grid>
-          <Grid item xs={3} sm={2}>
-            <ImgCandidate src={Candidate5Icon} />
-          </Grid>
-          <Grid item xs={3} sm={2}>
-            <ImgCandidate src={Candidate6Icon} />
-          </Grid>
-        </Grid>
-      </Container>
-    </>
+        </Stack>
+
+      </Stack>
+    </Container>
   )
 }
 
