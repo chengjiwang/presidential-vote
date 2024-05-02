@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Box, Container, Select, FormControl, MenuItem, Typogra
 import styled from '@emotion/styled'
 
 import PresidentialVotes from '../components/PresidentialVotes.jsx'
+import PartyChart from '../components/PartyChart.jsx'
 import { yearList } from '../utils/yearList.js'
 import candidates from '../data/candidates.json'
 import elections from '../data/election.json'
@@ -229,6 +230,7 @@ function VotePage() {
           candidate={candidates[selectedYear]}
           voteData={selectedVoteData.all}       
         />
+        <PartyChart />
       </Stack>
     </>
   )
