@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 
 import PresidentialVotes from '../components/PresidentialVotes.jsx'
 import PartyChart from '../components/PartyChart.jsx'
+import VoteTable from '../components/VoteTable.jsx'
 import { yearList } from '../utils/yearList.js'
 import candidates from '../data/candidates.json'
 import elections from '../data/election.json'
@@ -231,6 +232,10 @@ function VotePage() {
           voteData={selectedVoteData.all}       
         />
         <PartyChart />
+        <VoteTable 
+          candidate={candidates[selectedYear]}
+          voteData={selectedVoteData.each} 
+        />
       </Stack>
     </>
   )
