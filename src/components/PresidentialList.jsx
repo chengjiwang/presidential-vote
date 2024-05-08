@@ -1,20 +1,18 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography, Box, List, ListItem, ListItemText, ListItemAvatar } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 import { partyColor } from '../utils/partyColor.js'
+import getMaxVotedParty from '../utils/getMaxVotedParty.js'
 import theme from '../theme.js'
 
 export default function PresidentialList({ candidate, voteData }) {
-  let maxTotalPartyName = ''
-  Object.entries(voteData).forEach(([party, partyData]) => {
-    if (typeof partyData === 'object' && Object.hasOwnProperty.call(partyData, 'total')) {
-      if (!maxTotalPartyName || partyData.total > voteData[maxTotalPartyName].total) {
-        maxTotalPartyName = party;
-      }
-    }
-  })
-  
+  const maxVotedParty = React.useMemo(
+    () => getMaxVotedParty(voteData),
+    [voteData]
+  )
+
   return (
     <List
       sx={{
@@ -68,7 +66,7 @@ export default function PresidentialList({ candidate, voteData }) {
                       {candidate[key].name}
                     </Typography>
 
-                    {key === maxTotalPartyName && <CheckCircleIcon color='primary' />}
+                    {key === maxVotedParty && <CheckCircleIcon color='primary' />}
                   </Box>
 
                   <Box component='span'>

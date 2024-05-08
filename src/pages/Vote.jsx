@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 
 import PresidentialVotes from '../components/PresidentialVotes.jsx'
 import PartyChart from '../components/PartyChart.jsx'
+import VoteTable from '../components/VoteTable.jsx'
 import { yearList } from '../utils/yearList.js'
 import candidates from '../data/candidates.json'
 import elections from '../data/election.json'
@@ -23,6 +24,8 @@ const ImgTitle = styled.img`
     width: 177px;
   }
 `
+
+export const VoteContext = React.createContext()
 
 function VotePage() {
   const params = useParams()
@@ -66,7 +69,12 @@ function VotePage() {
   }
 
   return (
-    <>
+    <VoteContext.Provider value={{
+      selectedCity,
+      setSelectedCity,
+      selectedDistrict,
+      setSelectedDistrict
+    }}>
       <AppBar
         position="fixed"
         sx={{
@@ -231,8 +239,12 @@ function VotePage() {
           voteData={selectedVoteData.all}       
         />
         <PartyChart />
+        <VoteTable 
+          candidate={candidates[selectedYear]}
+          voteData={selectedVoteData.each} 
+        />
       </Stack>
-    </>
+    </VoteContext.Provider>
   )
 }
 

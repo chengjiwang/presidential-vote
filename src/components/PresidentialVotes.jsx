@@ -4,8 +4,8 @@ import { Gauge } from '@mui/x-charts/Gauge'
 
 import PresidentialList from './PresidentialList.jsx'
 import VoteListItem from './VoteListItem.jsx'
+import RateBar from './RateBar.jsx'
 import theme from '../theme.js'
-import { partyColor } from '../utils/partyColor.js'
 
 export default function PresidentialVotes({ candidate, voteData }) {
   return (
@@ -33,35 +33,27 @@ export default function PresidentialVotes({ candidate, voteData }) {
           >
             <PresidentialList candidate={candidate} voteData={voteData} />
 
-            <Stack direction='row' borderRadius={4} overflow='hidden'>
-              {Object.keys(candidate).map((key, index) => {
-                const rate = voteData[key].rate
-                return (
-                  <Box key={index} sx={{ bgcolor: partyColor[key], width: `${rate}%` }}>
-                    {rate > 5 && (
-                      <Typography fontSize={12} align='center' color='common.white'>
-                        {rate}%
-                      </Typography>
-                    )}
-                  </Box>
-                )
-              })}
-            </Stack>
+            <RateBar
+              candidate={candidate}
+              data={voteData}
+              isShowText
+              height={18}
+            />
           </Box>
         </Grid>
 
         <Grid item xs={12} xl={6}>
           <Stack direction='row' spacing={5} borderRadius={3} bgcolor={theme.palette.background.paper} p={3}>
-            <Box 
+            <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center'
               }}
-            >            
+            >
               <Gauge
                 width={124}
                 height={124}
-                value={voteData.rate}               
+                value={voteData.rate}
                 text={
                   ({ value }) => `投票率\n ${value}%`
                 }
@@ -69,16 +61,16 @@ export default function PresidentialVotes({ candidate, voteData }) {
             </Box>
 
             <Stack spacing={2}>
-              <Stack 
-                spacing={{ xs: 2, md: 6 }} 
+              <Stack
+                spacing={{ xs: 2, md: 6 }}
                 direction={{ xs: 'column', md: 'row' }}
               >
                 <VoteListItem text='投票數' value={voteData.total.toLocaleString()} />
                 <VoteListItem text='投票率' value={`${voteData.rate}%`} />
               </Stack>
 
-              <Stack 
-                spacing={{ xs: 2, md: 6 }}  
+              <Stack
+                spacing={{ xs: 2, md: 6 }}
                 direction={{ xs: 'column', md: 'row' }}
               >
                 <VoteListItem text='有效票數' value={voteData.valid.toLocaleString()} />
