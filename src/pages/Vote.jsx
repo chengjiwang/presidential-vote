@@ -25,6 +25,8 @@ const ImgTitle = styled.img`
   }
 `
 
+export const VoteContext = React.createContext()
+
 function VotePage() {
   const params = useParams()
   const navigate = useNavigate()
@@ -67,7 +69,12 @@ function VotePage() {
   }
 
   return (
-    <>
+    <VoteContext.Provider value={{
+      selectedCity,
+      setSelectedCity,
+      selectedDistrict,
+      setSelectedDistrict
+    }}>
       <AppBar
         position="fixed"
         sx={{
@@ -237,7 +244,7 @@ function VotePage() {
           voteData={selectedVoteData.each} 
         />
       </Stack>
-    </>
+    </VoteContext.Provider>
   )
 }
 
