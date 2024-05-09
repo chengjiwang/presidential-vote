@@ -37,6 +37,8 @@ export default function VoteHeader() {
 
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value)
+    setSelectedCity('all')
+    setSelectedDistrict('all')
     navigate(`/vote/${event.target.value}`)
   }
 
