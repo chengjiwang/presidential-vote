@@ -1,18 +1,22 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography, Stack, Box } from '@mui/material'
 
+import { VoteContext } from '../pages/Vote.jsx'
 import { partyColor } from '../utils/partyColor.js'
 
-export default function RateBar({ candidate, data, isShowText= false, height }) {
+export default function RateBar({ data, isShowText = false, height }) {
+  const { candidate } = React.useContext(VoteContext)
+
   return (
     <Stack direction='row' borderRadius={4} overflow='hidden'>
       {Object.keys(candidate).map((key, index) => {
         const rate = data[key].rate
         return (
-          <Box 
-            key={index} 
-            sx={{ 
-              bgcolor: partyColor[key], 
+          <Box
+            key={index}
+            sx={{
+              bgcolor: partyColor[key],
               width: `${rate}%`,
               height: height
             }}>
@@ -29,7 +33,6 @@ export default function RateBar({ candidate, data, isShowText= false, height }) 
 }
 
 RateBar.propTypes = {
-  candidate: PropTypes.object,
   data: PropTypes.object,
   isShowText: PropTypes.bool,
   height: PropTypes.number.isRequired

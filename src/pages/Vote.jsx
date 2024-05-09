@@ -26,6 +26,7 @@ const ImgTitle = styled.img`
 `
 
 export const VoteContext = React.createContext()
+export const UserSelectionContext = React.createContext()
 
 function VotePage() {
   const params = useParams()
@@ -41,17 +42,17 @@ function VotePage() {
   const districtData = cityData[selectedCity]
   const districts = districtData && Object.keys(districtData['鄉鎮市區'])
 
-  let selectedVoteData = {}
-  
+  let selectedTotalVote = {}
+  let selectedEachVote = {}
   if (selectedCity === 'all') {
-    selectedVoteData.all = election['全國']
-    selectedVoteData.each = cityData
+    selectedTotalVote = election['全國']
+    selectedEachVote = cityData
   } else if (selectedCity !== 'all' && selectedDistrict === 'all') {
-    selectedVoteData.all = districtData
-    selectedVoteData.each = districtData['鄉鎮市區']
+    selectedTotalVote = districtData
+    selectedEachVote = districtData['鄉鎮市區']
   } else {
-    selectedVoteData.all = districtData['鄉鎮市區'][selectedDistrict]
-    selectedVoteData.each = districtData['鄉鎮市區'][selectedDistrict]['村里']
+    selectedTotalVote = districtData['鄉鎮市區'][selectedDistrict]
+    selectedEachVote = districtData['鄉鎮市區'][selectedDistrict]['村里']
   }
 
   const handleYearChange = (event) => {
@@ -69,12 +70,7 @@ function VotePage() {
   }
 
   return (
-    <VoteContext.Provider value={{
-      selectedCity,
-      setSelectedCity,
-      selectedDistrict,
-      setSelectedDistrict
-    }}>
+    <>
       <AppBar
         position="fixed"
         sx={{
@@ -220,31 +216,43 @@ function VotePage() {
         </Container>
       </AppBar>
 
-      <Stack
-        spacing={3}
-        component='section'
-        sx={{ mt: 4, mx: 3, pt: '96px' }}
+      <VoteContext.Provider 
+        value={{ 
+          selectedTotalVote, 
+          selectedEachVote, 
+          candidate: candidates[selectedYear] 
+        }}
       >
-        <Typography
-          component="h3"
-          color="text.primary"
-          fontWeight="bold"
-          fontSize={28}      
+        <Stack
+          spacing={3}
+          component='section'
+          sx={{ mt: 4, mx: 3, pt: '96px' }}
         >
-          全臺縣市總統得票
-        </Typography>
+          <Typography
+            component="h3"
+            color="text.primary"
+            fontWeight="bold"
+            fontSize={28}
+          >
+            全臺縣市總統得票
+          </Typography>
 
-        <PresidentialVotes
-          candidate={candidates[selectedYear]}
-          voteData={selectedVoteData.all}       
-        />
-        <PartyChart />
-        <VoteTable 
-          candidate={candidates[selectedYear]}
-          voteData={selectedVoteData.each} 
-        />
-      </Stack>
-    </VoteContext.Provider>
+          <PresidentialVotes />
+          <PartyChart />
+
+          <UserSelectionContext.Provider
+            value={{
+              selectedCity,
+              setSelectedCity,
+              selectedDistrict,
+              setSelectedDistrict
+            }}
+          >
+            <VoteTable />
+          </UserSelectionContext.Provider>
+        </Stack>
+      </VoteContext.Provider>
+    </>
   )
 }
 

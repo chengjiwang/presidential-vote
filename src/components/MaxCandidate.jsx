@@ -1,9 +1,13 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Stack } from '@mui/material'
 
+import { VoteContext } from '../pages/Vote.jsx'
 import { partyColor } from '../utils/partyColor.js'
 
-export default function MaxCandidate({ candidate, maxVotedParty }) {
+export default function MaxCandidate({ maxVotedParty }) {
+  const { candidate } = React.useContext(VoteContext)
+  
   return (
     <Stack direction='row' alignItems='center' spacing={1}>
       <Box
@@ -31,6 +35,5 @@ export default function MaxCandidate({ candidate, maxVotedParty }) {
 }
 
 MaxCandidate.propTypes = {
-  candidate: PropTypes.object,
   maxVotedParty: PropTypes.string
 }

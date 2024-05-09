@@ -1,11 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { styled } from '@mui/material/styles'
 import { Typography, Box, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Stack } from '@mui/material'
 import { tableCellClasses } from '@mui/material/TableCell'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
-import { VoteContext } from '../pages/Vote.jsx'
+import { VoteContext, UserSelectionContext } from '../pages/Vote.jsx'
 import RateBar from './RateBar.jsx'
 import MaxCandidate from './MaxCandidate.jsx';
 import getMaxVotedParty from '../utils/getMaxVotedParty.js'
@@ -18,8 +17,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }
 }))
 
-export default function VoteTable({ candidate, voteData }) {
-  const { selectedCity, setSelectedCity, selectedDistrict, setSelectedDistrict } = React.useContext(VoteContext)
+export default function VoteTable() {
+  const { selectedEachVote } = React.useContext(VoteContext)
+  const { selectedCity, setSelectedCity, selectedDistrict, setSelectedDistrict } = React.useContext(UserSelectionContext)
 
   const isShowArrowRightIcon = selectedCity === 'all' || selectedDistrict === 'all'
 
@@ -41,6 +41,7 @@ export default function VoteTable({ candidate, voteData }) {
       >
         {selectedCity === 'all' ? '各縣市投票總覽' : '各區域投票總覽'}
       </Typography>
+
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader size="small" aria-label="vote table">
           <TableHead>
@@ -55,8 +56,8 @@ export default function VoteTable({ candidate, voteData }) {
           </TableHead>
 
           <TableBody>
-            {Object.keys(voteData).map((key) => {
-              const voteItem = voteData[key]
+            {Object.keys(selectedEachVote).map((key) => {
+              const voteItem = selectedEachVote[key]
               const maxVotedParty = getMaxVotedParty(voteItem)
               return (
                 <TableRow
@@ -72,29 +73,15 @@ export default function VoteTable({ candidate, voteData }) {
                     {key}
                   </TableCell>
                   <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                    <RateBar
-                      candidate={candidate}
-                      data={voteItem}
-                      height={8}
-                    />
+                    <RateBar data={voteItem} height={8} />
                   </TableCell>
                   <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                    <MaxCandidate
-                      candidate={candidate}
-                      maxVotedParty={maxVotedParty}
-                    />
+                    <MaxCandidate maxVotedParty={maxVotedParty} />
                   </TableCell>
                   <TableCell sx={{ display: { md: 'none' } }}>
                     <Stack spacing={1}>
-                      <MaxCandidate
-                        candidate={candidate}
-                        maxVotedParty={maxVotedParty}
-                      />
-                      <RateBar
-                        candidate={candidate}
-                        data={voteItem}
-                        height={8}
-                      />
+                      <MaxCandidate maxVotedParty={maxVotedParty} />
+                      <RateBar data={voteItem} height={8} />
                     </Stack>
                   </TableCell>
                   <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>{voteItem.total.toLocaleString()}</TableCell>
@@ -112,9 +99,4 @@ export default function VoteTable({ candidate, voteData }) {
       </TableContainer>
     </Box>
   )
-}
-
-VoteTable.propTypes = {
-  candidate: PropTypes.object,
-  voteData: PropTypes.object
 }

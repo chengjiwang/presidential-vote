@@ -1,13 +1,16 @@
-import PropTypes from 'prop-types'
+import React from 'react'
 import { Typography, Stack, Grid, Box } from '@mui/material'
 import { Gauge } from '@mui/x-charts/Gauge'
 
+import { VoteContext } from '../pages/Vote.jsx'
 import PresidentialList from './PresidentialList.jsx'
 import VoteListItem from './VoteListItem.jsx'
 import RateBar from './RateBar.jsx'
 import theme from '../theme.js'
 
-export default function PresidentialVotes({ candidate, voteData }) {
+export default function PresidentialVotes() {
+  const { selectedTotalVote } = React.useContext(VoteContext)
+
   return (
     <Box sx={{ borderRadius: 3, bgcolor: theme.palette.bg.main, p: 2 }}>
       <Typography
@@ -31,11 +34,10 @@ export default function PresidentialVotes({ candidate, voteData }) {
               bgcolor: theme.palette.background.paper
             }}
           >
-            <PresidentialList candidate={candidate} voteData={voteData} />
+            <PresidentialList />
 
-            <RateBar
-              candidate={candidate}
-              data={voteData}
+            <RateBar         
+              data={selectedTotalVote}
               isShowText
               height={18}
             />
@@ -53,7 +55,7 @@ export default function PresidentialVotes({ candidate, voteData }) {
               <Gauge
                 width={124}
                 height={124}
-                value={voteData.rate}
+                value={selectedTotalVote.rate}
                 text={
                   ({ value }) => `投票率\n ${value}%`
                 }
@@ -65,16 +67,16 @@ export default function PresidentialVotes({ candidate, voteData }) {
                 spacing={{ xs: 2, md: 6 }}
                 direction={{ xs: 'column', md: 'row' }}
               >
-                <VoteListItem text='投票數' value={voteData.total.toLocaleString()} />
-                <VoteListItem text='投票率' value={`${voteData.rate}%`} />
+                <VoteListItem text='投票數' value={selectedTotalVote.total.toLocaleString()} />
+                <VoteListItem text='投票率' value={`${selectedTotalVote.rate}%`} />
               </Stack>
 
               <Stack
                 spacing={{ xs: 2, md: 6 }}
                 direction={{ xs: 'column', md: 'row' }}
               >
-                <VoteListItem text='有效票數' value={voteData.valid.toLocaleString()} />
-                <VoteListItem text='無效票數' value={voteData.invalid.toLocaleString()} />
+                <VoteListItem text='有效票數' value={selectedTotalVote.valid.toLocaleString()} />
+                <VoteListItem text='無效票數' value={selectedTotalVote.invalid.toLocaleString()} />
               </Stack>
             </Stack>
           </Stack>
@@ -83,8 +85,3 @@ export default function PresidentialVotes({ candidate, voteData }) {
     </Box>
   )
 }
-
-PresidentialVotes.propTypes = {
-  candidate: PropTypes.object,
-  voteData: PropTypes.object
-};

@@ -1,16 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Typography, Box, List, ListItem, ListItemText, ListItemAvatar } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
+import { VoteContext } from '../pages/Vote.jsx'
 import { partyColor } from '../utils/partyColor.js'
 import getMaxVotedParty from '../utils/getMaxVotedParty.js'
 import theme from '../theme.js'
 
-export default function PresidentialList({ candidate, voteData }) {
+export default function PresidentialList() {
+  const { selectedTotalVote, candidate } = React.useContext(VoteContext)
+
   const maxVotedParty = React.useMemo(
-    () => getMaxVotedParty(voteData),
-    [voteData]
+    () => getMaxVotedParty(selectedTotalVote),
+    [selectedTotalVote]
   )
 
   return (
@@ -74,7 +76,7 @@ export default function PresidentialList({ candidate, voteData }) {
                       component='span'
                       sx={{ fontSize: 16, fontWeight: 700, color: theme.palette.text.primary }}
                     >
-                      {voteData[key].total.toLocaleString()}
+                      {selectedTotalVote[key].total.toLocaleString()}
                     </Box>
                     <Box component='span' sx={{ ml: 0.5 }}>票</Box>
                   </Box>
@@ -87,8 +89,3 @@ export default function PresidentialList({ candidate, voteData }) {
     </List>
   )
 }
-
-PresidentialList.propTypes = {
-  candidate: PropTypes.object,
-  voteData: PropTypes.object,
-};
