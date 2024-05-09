@@ -8,13 +8,13 @@ import { yearList } from '../utils/yearList.js'
 import LogoIcon from '../assets/logo.svg'
 import TitleIcon from '../assets/home_title.svg'
 
-const ImgLogo = styled.img`
+const StyledLogoImage = styled.img`
   width: 53px;
   @media (max-width: 600px) {
     width: 37px;
   }
 `
-const ImgTitle = styled.img`
+const StyledTitleImage = styled.img`
   width: 251px;
   @media (max-width: 600px) {
     width: 177px;
@@ -83,8 +83,8 @@ export default function VoteHeader() {
                 mr: { xs: 'auto', lg: 3 }
               }}
             >
-              <ImgLogo src={LogoIcon} alt="Logo" />
-              <ImgTitle src={TitleIcon} alt="title" />
+              <StyledLogoImage src={LogoIcon} alt="Logo" />
+              <StyledTitleImage src={TitleIcon} alt="title" />
             </Stack>
 
             <Stack
