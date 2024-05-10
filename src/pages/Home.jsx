@@ -12,10 +12,10 @@ import Candidate4Icon from '../assets/candidate4.svg'
 import Candidate5Icon from '../assets/candidate5.svg'
 import Candidate6Icon from '../assets/candidate6.svg'
 
-const ImgLogo = styled.img`
+const StyledLogoImage = styled.img`
   width: 137px;
 `;
-const ImgTitle = styled.img`
+const StyledTitleImage = styled.img`
   width: 525px;
   @media (max-width: 600px) {
     width: 287px;
@@ -40,8 +40,8 @@ function HomePage() {
       >
         <Stack spacing={3} component='section' sx={{ mt: 12 }}>
           <Stack spacing={2} alignItems='center'>
-            <ImgLogo src={LogoIcon} alt="Logo" />
-            <ImgTitle src={TitleIcon} alt="title" />
+            <StyledLogoImage src={LogoIcon} alt="Logo" />
+            <StyledTitleImage src={TitleIcon} alt="title" />
           </Stack>
 
           <Typography
