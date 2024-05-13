@@ -4,7 +4,7 @@ import { Typography, Box, TableContainer, Table, TableBody, TableCell, TableHead
 import { tableCellClasses } from '@mui/material/TableCell'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
-import { VoteContext, UserSelectionContext } from '../pages/Vote.jsx'
+import { VoteContext } from '../store/vote-context.jsx'
 import RateBar from './RateBar.jsx'
 import MaxCandidate from './MaxCandidate.jsx';
 import getMaxVotedParty from '../utils/getMaxVotedParty.js'
@@ -18,8 +18,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }))
 
 export default function VoteTable() {
-  const { selectedEachVote } = React.useContext(VoteContext)
-  const { query, setQuery } = React.useContext(UserSelectionContext)
+  const { query, setQuery, selectedEachVote } = React.useContext(VoteContext)
 
   const isShowArrowRightIcon = query.city === 'all' || query.district === 'all'
 

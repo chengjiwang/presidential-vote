@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { AppBar, Toolbar, Box, Container, Select, FormControl, MenuItem, Typography, Stack } from '@mui/material'
 import styled from '@emotion/styled'
 
-import { HeaderContext } from '../pages/Vote.jsx'
+import { VoteContext } from '../store/vote-context.jsx'
 import { yearList } from '../utils/yearList.js'
-import elections from '../data/election.json'
 import LogoIcon from '../assets/logo.svg'
 import TitleIcon from '../assets/home_title.svg'
 
@@ -25,12 +24,8 @@ const StyledTitleImage = styled.img`
 export default function VoteHeader() {
   const navigate = useNavigate()
 
-  const {
-    query,
-    setQuery
-  } = React.useContext(HeaderContext)
+  const { query, setQuery, election } = React.useContext(VoteContext)
 
-  const election = elections[query.year]
   const counties = Object.keys(election['縣市'])
   const districts = query.city === 'all' ? [] : Object.keys(election['縣市'][query.city]['鄉鎮市區'])
 

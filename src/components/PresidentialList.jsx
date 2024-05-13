@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, Box, List, ListItem, ListItemText, ListItemAvatar } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
-import { VoteContext } from '../pages/Vote.jsx'
+import { VoteContext } from '../store/vote-context.jsx'
 import { partyColor } from '../utils/partyColor.js'
 import getMaxVotedParty from '../utils/getMaxVotedParty.js'
 import theme from '../theme.js'

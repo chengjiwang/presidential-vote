@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Typography, Stack, Box } from '@mui/material'
 
-import { VoteContext } from '../pages/Vote.jsx'
+import { VoteContext } from '../store/vote-context.jsx'
 import { partyColor } from '../utils/partyColor.js'
 
 export default function RateBar({ data, isShowText = false, height }) {
