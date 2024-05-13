@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { AppBar, Toolbar, Box, Container, Select, FormControl, MenuItem, Typography, Stack } from '@mui/material'
 import styled from '@emotion/styled'
 
-import { HeaderContext } from '../pages/Vote.jsx'
+import { VoteContext } from '../store/vote-context.jsx'
 import { yearList } from '../utils/yearList.js'
 import LogoIcon from '../assets/logo.svg'
 import TitleIcon from '../assets/home_title.svg'
@@ -24,31 +24,22 @@ const StyledTitleImage = styled.img`
 export default function VoteHeader() {
   const navigate = useNavigate()
 
-  const { 
-    counties,
-    districts,
-    selectedYear,
-    setSelectedYear,
-    selectedCity,
-    setSelectedCity,
-    selectedDistrict,
-    setSelectedDistrict } = React.useContext(HeaderContext)
+  const { query, setQuery, election } = React.useContext(VoteContext)
 
+  const counties = Object.keys(election['縣市'])
+  const districts = query.city === 'all' ? [] : Object.keys(election['縣市'][query.city]['鄉鎮市區'])
 
   const handleYearChange = (event) => {
-    setSelectedYear(event.target.value)
-    setSelectedCity('all')
-    setSelectedDistrict('all')
+    setQuery({ year: event.target.value, city: 'all', district: 'all' })
     navigate(`/vote/${event.target.value}`)
   }
 
   const handleCityChange = (event) => {
-    setSelectedCity(event.target.value)
-    setSelectedDistrict('all')
+    setQuery({ ...query, city: event.target.value, district: 'all' })
   }
 
   const handleDistrictChange = (event) => {
-    setSelectedDistrict(event.target.value)
+    setQuery({ ...query, district: event.target.value })
   }
 
   return (
@@ -112,8 +103,8 @@ export default function VoteHeader() {
                   minWidth: { xs: 76, md: 120 }
                 }}
               >
-                <Select
-                  value={selectedYear}
+                <Select                
+                  value={query.year}
                   onChange={handleYearChange}
                   displayEmpty
                   color='bg'
@@ -148,8 +139,8 @@ export default function VoteHeader() {
                 width: '100%'
               }}
             >
-              <Select
-                value={selectedCity}
+              <Select              
+                value={query.city}
                 onChange={handleCityChange}
                 displayEmpty
                 color='bg'
@@ -174,8 +165,8 @@ export default function VoteHeader() {
                 width: '100%'
               }}
             >
-              <Select
-                value={selectedDistrict}
+              <Select              
+                value={query.district}
                 onChange={handleDistrictChange}
                 displayEmpty
                 color='bg'

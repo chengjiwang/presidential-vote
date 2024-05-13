@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, Stack, Grid, Box } from '@mui/material'
 import { Gauge } from '@mui/x-charts/Gauge'
 
-import { VoteContext } from '../pages/Vote.jsx'
+import { VoteContext } from '../store/vote-context.jsx'
 import PresidentialList from './PresidentialList.jsx'
 import VoteListItem from './VoteListItem.jsx'
 import RateBar from './RateBar.jsx'

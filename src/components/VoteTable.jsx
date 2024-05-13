@@ -4,7 +4,7 @@ import { Typography, Box, TableContainer, Table, TableBody, TableCell, TableHead
 import { tableCellClasses } from '@mui/material/TableCell'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 
-import { VoteContext, UserSelectionContext } from '../pages/Vote.jsx'
+import { VoteContext } from '../store/vote-context.jsx'
 import RateBar from './RateBar.jsx'
 import MaxCandidate from './MaxCandidate.jsx';
 import getMaxVotedParty from '../utils/getMaxVotedParty.js'
@@ -18,16 +18,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }))
 
 export default function VoteTable() {
-  const { selectedEachVote } = React.useContext(VoteContext)
-  const { selectedCity, setSelectedCity, selectedDistrict, setSelectedDistrict } = React.useContext(UserSelectionContext)
+  const { query, setQuery, selectedEachVote } = React.useContext(VoteContext)
 
-  const isShowArrowRightIcon = selectedCity === 'all' || selectedDistrict === 'all'
+  const isShowArrowRightIcon = query.city === 'all' || query.district === 'all'
 
   const handleTableRowClick = (clickedRow) => {
-    if (selectedCity === 'all') {
-      setSelectedCity(clickedRow)
-    } else if (selectedCity !== 'all' && selectedDistrict === 'all') {
-      setSelectedDistrict(clickedRow)
+    if (query.city === 'all') {
+      setQuery({ ...query, city: clickedRow })
+    } else if (query.city !== 'all' && query.district === 'all') {
+      setQuery({ ...query, district: clickedRow })
     }
   }
 
@@ -39,7 +38,7 @@ export default function VoteTable() {
         fontWeight={700}
         mb={1}
       >
-        {selectedCity === 'all' ? '各縣市投票總覽' : '各區域投票總覽'}
+        {query.city === 'all' ? '各縣市投票總覽' : '各區域投票總覽'}
       </Typography>
 
       <TableContainer sx={{ maxHeight: 440 }}>
