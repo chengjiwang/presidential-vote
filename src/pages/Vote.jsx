@@ -15,52 +15,45 @@ export const UserSelectionContext = React.createContext()
 
 function VotePage() {
   const params = useParams()
-  const [selectedYear, setSelectedYear] = React.useState(params?.voteId)
-  const [selectedCity, setSelectedCity] = React.useState('all')
-  const [selectedDistrict, setSelectedDistrict] = React.useState('all')
 
-  const election = elections[selectedYear]
-  const cityData = election['縣市']
-  const counties = Object.keys(cityData)
-  const districtData = cityData[selectedCity]
-  const districts = districtData && Object.keys(districtData['鄉鎮市區'])
+  const [query, setQuery] = React.useState({
+    year: params?.voteId,
+    city: 'all',
+    district: 'all'
+  })
+  
+  const election = elections[query.year]
+  const districtData = election['縣市'][query.city]
 
   let selectedTotalVote = {}
   let selectedEachVote = {}
-  if (selectedCity === 'all') {
+  if (query.city === 'all') {
     selectedTotalVote = election['全國']
-    selectedEachVote = cityData
-  } else if (selectedCity !== 'all' && selectedDistrict === 'all') {
+    selectedEachVote = election['縣市']
+  } else if (query.city !== 'all' && query.district === 'all') {
     selectedTotalVote = districtData
     selectedEachVote = districtData['鄉鎮市區']
   } else {
-    selectedTotalVote = districtData['鄉鎮市區'][selectedDistrict]
-    selectedEachVote = districtData['鄉鎮市區'][selectedDistrict]['村里']
+    selectedTotalVote = districtData['鄉鎮市區'][query.district]
+    selectedEachVote = districtData['鄉鎮市區'][query.district]['村里']
   }
 
-
   return (
-    <> 
+    <>
       <HeaderContext.Provider
-        value={{ 
-          counties,
-          districts,
-          selectedYear,
-          setSelectedYear,
-          selectedCity,
-          setSelectedCity,
-          selectedDistrict,
-          setSelectedDistrict
-        }} 
+        value={{
+          query,
+          setQuery       
+        }}
       >
         <VoteHeader />
       </HeaderContext.Provider>
 
-      <VoteContext.Provider 
-        value={{ 
-          selectedTotalVote, 
-          selectedEachVote, 
-          candidate: candidates[selectedYear] 
+      <VoteContext.Provider
+        value={{
+          selectedTotalVote,
+          selectedEachVote,
+          candidate: candidates[query.year]
         }}
       >
         <Stack
@@ -82,10 +75,8 @@ function VotePage() {
 
           <UserSelectionContext.Provider
             value={{
-              selectedCity,
-              setSelectedCity,
-              selectedDistrict,
-              setSelectedDistrict
+              query,
+              setQuery            
             }}
           >
             <VoteTable />
