@@ -3,7 +3,7 @@ import { Typography, Stack } from '@mui/material'
 
 export default function VoteListItem({ text, value }) {
   return (
-    <Stack spacing={1} minWidth={138}>
+    <Stack spacing={{ md: 1 }} minWidth={138}>
       <Typography
         variant="body2"
         color="text.secondary"

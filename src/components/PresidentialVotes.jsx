@@ -24,19 +24,19 @@ export default function PresidentialVotes() {
         總統得票數
       </Typography>
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} xl={6} >
+      <Grid container rowSpacing={2} columnSpacing={{ md: 2 }}>
+        <Grid item xs={12} xl={6}>
           <Box
             sx={{
-              px: 3,
-              py: 4,
+              px: { xs: 2, md: 3 },
+              py: { xs: 2, md: 4 },
               borderRadius: 3,
               bgcolor: theme.palette.background.paper
             }}
           >
             <PresidentialList />
 
-            <RateBar         
+            <RateBar
               data={selectedTotalVote}
               isShowText
               height={18}
@@ -45,7 +45,15 @@ export default function PresidentialVotes() {
         </Grid>
 
         <Grid item xs={12} xl={6}>
-          <Stack direction='row' spacing={5} borderRadius={3} bgcolor={theme.palette.background.paper} p={3}>
+          <Stack
+            direction='row'         
+            spacing={{ md: 5 }}
+            justifyContent={{ xs: 'space-around', md: 'flex-start'}}
+            borderRadius={3}
+            bgcolor={theme.palette.background.paper}
+            py={{ xs: 2, md: 3 }}
+            px={{ md: 3 }}
+          >
             <Box
               sx={{
                 display: 'flex',

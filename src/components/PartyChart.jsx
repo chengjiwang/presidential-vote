@@ -18,6 +18,7 @@ const chartSetting = {
       labelStyle: {
         fontSize: 12,
       },
+      padding: { top: 0 }
     }
   },
   sx: {
