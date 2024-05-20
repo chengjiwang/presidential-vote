@@ -10,7 +10,7 @@ const theme = createTheme({
       primary: '#334155',
       secondary: '#64748B',
     },
-    bg: {
+    customBg: {
       main: '#E9ECEF',
       contrastText: '#334155',
     },

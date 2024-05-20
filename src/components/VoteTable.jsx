@@ -12,7 +12,7 @@ import theme from '../theme.js'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.bg.main,
+    backgroundColor: theme.palette.customBg.main,
     fontSize: 14,
   }
 }))
@@ -65,7 +65,7 @@ export default function VoteTable() {
                   sx={{
                     cursor: isShowArrowRightIcon ? 'pointer' : 'auto',
                     '&:last-child td, &:last-child th': { border: 0 },
-                    '&:hover': { backgroundColor: theme.palette.bg.main }
+                    '&:hover': { backgroundColor: theme.palette.customBg.main }
                   }}
                 >
                   <TableCell component="th" scope="row" sx={{ fontWeight: 700 }}>
