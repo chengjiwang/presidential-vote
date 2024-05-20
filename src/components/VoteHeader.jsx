@@ -106,8 +106,7 @@ export default function VoteHeader() {
                 <Select                
                   value={query.year}
                   onChange={handleYearChange}
-                  displayEmpty
-                  color='bg'
+                  displayEmpty              
                   sx={{
                     borderRadius: 8,
                     backgroundColor: 'bg.main',
@@ -142,8 +141,7 @@ export default function VoteHeader() {
               <Select              
                 value={query.city}
                 onChange={handleCityChange}
-                displayEmpty
-                color='bg'
+                displayEmpty            
                 sx={{
                   borderRadius: '2rem 0 0 2rem',
                   backgroundColor: 'bg.main',
@@ -168,8 +166,7 @@ export default function VoteHeader() {
               <Select              
                 value={query.district}
                 onChange={handleDistrictChange}
-                displayEmpty
-                color='bg'
+                displayEmpty             
                 sx={{
                   borderRadius: '0 2rem 2rem 0',
                   backgroundColor: 'bg.main',
