@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { AppBar, Toolbar, Box, Container, Select, FormControl, MenuItem, Typography, Stack } from '@mui/material'
 import styled from '@emotion/styled'
 
@@ -74,7 +74,9 @@ export default function VoteHeader() {
                 mr: { xs: 'auto', lg: 3 }
               }}
             >
-              <StyledLogoImage src={LogoIcon} alt="Logo" />
+              <Link to='/'>
+                <StyledLogoImage src={LogoIcon} alt="Logo" />
+              </Link>
               <StyledTitleImage src={TitleIcon} alt="title" />
             </Stack>
 

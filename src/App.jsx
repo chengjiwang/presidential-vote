@@ -11,7 +11,9 @@ import '@fontsource/roboto/700.css';
 const router = createBrowserRouter([
   { path: '/', element: <HomePage /> },
   { path: '/vote/:voteId', element: <VotePage /> },
-]);
+], {
+  basename: "/presidential-vote",
+});
 
 function App() {
   return <RouterProvider router={router} />
