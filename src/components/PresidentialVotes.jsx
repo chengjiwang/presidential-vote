@@ -12,7 +12,7 @@ export default function PresidentialVotes() {
   const { selectedTotalVote } = React.useContext(VoteContext)
 
   return (
-    <Box sx={{ borderRadius: 3, bgcolor: theme.palette.bg.main, p: 2 }}>
+    <Box sx={{ borderRadius: 3, bgcolor: theme.palette.customBg.main, p: 2 }}>
       <Typography
         variant="h6"
         component="h4"

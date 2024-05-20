@@ -75,7 +75,7 @@ function HomePage() {
                     <Button
                       fullWidth
                       variant="contained"
-                      color='bg'
+                      color='customBg'
                       size="large"
                       sx={{
                         borderRadius: 16,
